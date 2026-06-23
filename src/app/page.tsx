@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PackageCard from '@/components/ui/PackageCard';
@@ -128,15 +127,10 @@ export default function HomePage() {
           {/* Background image */}
           <div style={{
             position: 'absolute', inset: 0,
-          }}>
-            <Image
-              src="https://images.unsplash.com/photo-1602769490455-36cf9734dbcb?w=2670&auto=format&fit=crop"
-              alt="Umroh journey"
-              fill
-              style={{ objectFit: 'cover' }}
-              priority
-            />
-          </div>
+            backgroundImage: 'url(https://images.unsplash.com/photo-1602769490455-36cf9734dbcb?w=2670&auto=format&fit=crop)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }} />
           {/* Gradient overlay */}
           <div className="hero-gradient" style={{ position: 'absolute', inset: 0 }} />
 
