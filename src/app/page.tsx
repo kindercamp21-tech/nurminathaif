@@ -1,5 +1,7 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import type { Metadata } from 'next';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PackageCard from '@/components/ui/PackageCard';
@@ -23,14 +25,6 @@ import {
   Award,
   Send2,
 } from 'iconsax-react';
-
-export const metadata: Metadata = {
-  title: 'NurminaThaifTour — Umroh yang Dipersonalisasi untuk Anda',
-  description:
-    'Bukan travel biasa. Kami menyesuaikan paket Umroh berdasarkan kebutuhan, anggaran, dan preferensi ibadah Anda. Transparan, terverifikasi, dan tanpa biaya tersembunyi.',
-};
-
-const featuredPackages = getFeaturedPackages();
 
 const stats = [
   { number: '500+', label: 'Jamaah Telah Diberangkatkan', Icon: People },
@@ -110,6 +104,11 @@ const articles = [
 ];
 
 export default function HomePage() {
+  const [featuredPackages, setFeaturedPackages] = useState<any[]>([]);
+
+  useEffect(() => {
+    setFeaturedPackages(getFeaturedPackages());
+  }, []);
   return (
     <>
       <Navbar />
