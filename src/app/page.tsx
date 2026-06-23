@@ -127,7 +127,7 @@ export default function HomePage() {
           {/* Background image */}
           <div style={{
             position: 'absolute', inset: 0,
-            backgroundImage: 'url(/images/madina.jpg)',
+            backgroundImage: 'url(/images/Madina.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }} />
