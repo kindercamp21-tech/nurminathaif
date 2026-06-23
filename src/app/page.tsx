@@ -6,6 +6,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PackageCard from '@/components/ui/PackageCard';
 import { getFeaturedPackages } from '@/data/packages';
+import { getBlogs } from '@/data/blogs';
 import { stories } from '@/data/stories';
 import {
   People,
@@ -79,35 +80,17 @@ const steps = [
   },
 ];
 
-const articles = [
-  {
-    title: 'Panduan Lengkap Persiapan Dokumen Umroh',
-    excerpt: 'Paspor, visa, dan dokumen apa saja yang wajib Anda siapkan sebelum berangkat Umroh...',
-    readTime: '5 min',
-    category: 'Persiapan',
-    Icon: NoteText,
-  },
-  {
-    title: '10 Tips Agar Umroh Lebih Khusyuk dan Berkesan',
-    excerpt: 'Persiapan spiritual dan fisik yang perlu Anda lakukan agar ibadah Umroh lebih bermakna...',
-    readTime: '7 min',
-    category: 'Tips',
-    Icon: Book1,
-  },
-  {
-    title: 'Memilih Paket Umroh: Economy, Standard, atau Premium?',
-    excerpt: 'Pahami perbedaan setiap kelas paket Umroh agar Anda bisa memilih yang paling sesuai...',
-    readTime: '6 min',
-    category: 'Panduan',
-    Icon: Routing,
-  },
-];
-
 export default function HomePage() {
   const [featuredPackages, setFeaturedPackages] = useState<any[]>([]);
+  const [guidePosts, setGuidePosts] = useState<any[]>([]);
 
   useEffect(() => {
     setFeaturedPackages(getFeaturedPackages());
+    const allBlogs = getBlogs();
+    const guides = allBlogs.filter(blog => 
+      blog.category === 'Panduan' || blog.category === 'Tips & Trik'
+    ).slice(0, 3);
+    setGuidePosts(guides);
   }, []);
   return (
     <>
@@ -415,15 +398,15 @@ export default function HomePage() {
               </Link>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
-              {articles.map(({ title, excerpt, readTime, category, Icon }) => (
-                <Link key={title} href="/knowledge" style={{ textDecoration: 'none' }}>
+              {guidePosts.map((post) => (
+                <Link key={post.id} href={`/blog/${post.slug}`} style={{ textDecoration: 'none' }}>
                   <div className="card" style={{ height: '100%' }}>
-                    <div style={{
-                      height: '130px',
-                      background: 'linear-gradient(135deg, var(--primary-900), var(--primary-700))',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}>
-                      <Icon size={44} color="rgba(212,175,55,0.7)" variant="Bold" />
+                    <div style={{ height: '130px', overflow: 'hidden', position: 'relative' }}>
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
                     </div>
                     <div className="card-body">
                       <span style={{
@@ -431,14 +414,16 @@ export default function HomePage() {
                         color: 'var(--primary-600)', background: 'var(--primary-50)',
                         padding: '3px 10px', borderRadius: '99px', display: 'inline-block', marginBottom: '10px',
                       }}>
-                        {category}
+                        {post.category}
                       </span>
                       <h3 style={{ fontSize: '0.975rem', fontWeight: 700, color: 'var(--gray-900)', marginBottom: '0.5rem', lineHeight: 1.45 }}>
-                        {title}
+                        {post.title}
                       </h3>
-                      <p style={{ fontSize: '0.85rem', color: 'var(--gray-500)', lineHeight: 1.65, marginBottom: '1rem' }}>{excerpt}</p>
+                      <p style={{ fontSize: '0.85rem', color: 'var(--gray-500)', lineHeight: 1.65, marginBottom: '1rem' }}>
+                        {post.excerpt}
+                      </p>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.75rem', color: 'var(--gray-400)' }}>
-                        <Clock size={13} color="currentColor" /> {readTime} baca
+                        <Clock size={13} color="currentColor" /> {post.readTime}
                       </div>
                     </div>
                   </div>
