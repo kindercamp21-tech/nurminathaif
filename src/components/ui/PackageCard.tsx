@@ -117,13 +117,13 @@ export default function PackageCard({ pkg, compact = false }: PackageCardProps) 
       {/* ── Body ── */}
       <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
 
-        {/* Provider row */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-          {pkg.verified && (
+        {/* Verified badge */}
+        {pkg.verified && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
             <TickCircle size={14} color="var(--success-500)" variant="Bold" />
-          )}
-          <span style={{ fontSize: '0.75rem', color: 'var(--gray-400)', fontWeight: 500 }}>{pkg.provider}</span>
-        </div>
+            <span style={{ fontSize: '0.75rem', color: 'var(--success-600)', fontWeight: 600 }}>Terverifikasi Kemenag</span>
+          </div>
+        )}
 
         {/* Name */}
         <h3 style={{

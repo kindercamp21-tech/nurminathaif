@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { isAuthenticated } from '@/lib/adminAuth';
 import { getHotels, saveHotels, Hotel, defaultHotels } from '@/data/hotels';
+import ImageUpload from '@/components/ui/ImageUpload';
 
 const emptyForm = {
   name: '',
@@ -172,13 +173,12 @@ export default function AdminHotelsPage() {
               </div>
 
               <div style={{ gridColumn: 'span 2' }}>
-                <label style={labelStyle}>URL Foto Hotel *</label>
-                <input required style={inputStyle} placeholder="Contoh: https://images.unsplash.com/photo-..." value={form.image} onChange={e => setForm({ ...form, image: e.target.value })} />
-                {form.image && (
-                  <div style={{ marginTop: '10px', borderRadius: '10px', overflow: 'hidden', maxHeight: '180px' }}>
-                    <img src={form.image} alt="Preview" style={{ width: '100%', height: '180px', objectFit: 'cover' }} onError={e => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'; }} />
-                  </div>
-                )}
+                <ImageUpload
+                  label="Foto Hotel *"
+                  currentImage={form.image}
+                  folder="hotels"
+                  onUpload={(url) => setForm({ ...form, image: url })}
+                />
               </div>
 
               <div style={{ gridColumn: 'span 2' }}>

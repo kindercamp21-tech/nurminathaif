@@ -35,7 +35,7 @@ export default function PackagesPage() {
 
   const filtered = useMemo(() => {
     let result = allPackages.filter(p => {
-      const matchSearch = !search || p.name.toLowerCase().includes(search.toLowerCase()) || p.provider.toLowerCase().includes(search.toLowerCase());
+      const matchSearch = !search || p.name.toLowerCase().includes(search.toLowerCase());
       const matchType = selectedTypes.length === 0 || selectedTypes.includes(p.type);
       const matchCity = selectedCities.length === 0 || p.departureCity.some(c => selectedCities.includes(c));
       const matchPrice = p.price <= maxPrice;
@@ -106,7 +106,7 @@ export default function PackagesPage() {
               <span style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--gray-400)', fontSize: '1rem' }}>🔍</span>
               <input
                 type="text"
-                placeholder="Cari paket atau provider..."
+                placeholder="Cari nama paket..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 className="input"

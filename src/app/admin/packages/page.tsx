@@ -7,6 +7,8 @@ import { isAuthenticated } from '@/lib/adminAuth';
 import { getPackages, Package, formatPrice, packages as defaultPackages } from '@/data/packages';
 import { getAirlines, Airline } from '@/data/airlines';
 import { getHotels, Hotel } from '@/data/hotels';
+import ImageUpload from '@/components/ui/ImageUpload';
+import MultipleImageUpload from '@/components/ui/MultipleImageUpload';
 
 const emptyForm = {
   name: '', type: 'standard', provider: '', price: '', originalPrice: '',
@@ -488,33 +490,25 @@ export default function AdminPackagesPage() {
               {activeSection === 'content' && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                   <div>
-                    <label style={labelStyle}>Gambar Utama (URL) *</label>
-                    <input style={inputStyle} placeholder="https://images.unsplash.com/..." value={form.image} onChange={e => setForm({ ...form, image: e.target.value })} />
-                    {form.image && (
-                      <div style={{ marginTop: '10px', borderRadius: '12px', overflow: 'hidden', maxHeight: '200px' }}>
-                        <img src={form.image} alt="Preview" style={{ width: '100%', height: '200px', objectFit: 'cover' }} onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-                      </div>
-                    )}
+                    <ImageUpload
+                      label="Gambar Utama *"
+                      currentImage={form.image}
+                      folder="packages"
+                      onUpload={(url) => setForm({ ...form, image: url })}
+                    />
                     <div style={{ marginTop: '8px', padding: '10px 14px', background: '#f8fafc', borderRadius: '10px', fontSize: '0.8rem', color: '#64748b', lineHeight: 1.6 }}>
-                      💡 <strong>Tips gambar gratis Unsplash:</strong> Cari foto Makkah/Kaabah di{' '}
-                      <a href="https://unsplash.com/s/photos/mecca" target="_blank" rel="noopener noreferrer" style={{ color: '#4f46e5' }}>unsplash.com</a>,
-                      klik foto → klik kanan → Salin URL gambar, lalu tambahkan <code style={{ background: '#e2e8f0', padding: '1px 5px', borderRadius: '4px' }}>?w=800&auto=format&fit=crop</code> di ujungnya.
+                      💡 <strong>Upload ke Supabase Storage:</strong> Gambar akan disimpan di cloud Supabase dan dapat diakses secara publik.
                     </div>
                   </div>
 
                   <div>
-                    <label style={labelStyle}>Galeri Gambar (1 URL per baris, max 5)</label>
-                    <textarea rows={5} style={{ ...inputStyle, resize: 'vertical', fontFamily: 'monospace', fontSize: '0.85rem' }} placeholder={'https://images.unsplash.com/photo-xxx?w=800\nhttps://images.unsplash.com/photo-yyy?w=800'} value={form.images} onChange={e => setForm({ ...form, images: e.target.value })} />
-                    {/* Galeri preview */}
-                    {form.images.trim() && (
-                      <div style={{ display: 'flex', gap: '8px', marginTop: '10px', flexWrap: 'wrap' }}>
-                        {form.images.split('\n').filter(Boolean).slice(0, 5).map((url, i) => (
-                          <div key={i} style={{ width: '80px', height: '60px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-                            <img src={url.trim()} alt={`Galeri ${i+1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3'; }} />
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                    <MultipleImageUpload
+                      label="Galeri Gambar (max 5)"
+                      currentImages={form.images.split('\n').filter(Boolean)}
+                      folder="packages"
+                      maxImages={5}
+                      onUpload={(urls) => setForm({ ...form, images: urls.join('\n') })}
+                    />
                   </div>
 
                   <div>

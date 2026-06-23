@@ -405,7 +405,7 @@ export default function AssessmentPage() {
                               {score}% Cocok
                             </span>
                           </div>
-                          <div style={{ fontSize: '0.8rem', color: 'var(--gray-400)', marginBottom: '8px' }}>{pkg.provider} • {pkg.duration} hari • Hotel {pkg.hotelRating}★</div>
+                          <div style={{ fontSize: '0.8rem', color: 'var(--gray-400)', marginBottom: '8px' }}>{pkg.duration} hari • Hotel {pkg.hotelRating}★</div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
                             <span style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--primary-600)', fontFamily: 'var(--font-secondary)' }}>{formatPrice(pkg.price)}</span>
                             <div style={{ display: 'flex', gap: '8px' }}>

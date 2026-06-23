@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { isAuthenticated } from '@/lib/adminAuth';
 import { getBlogs, BlogPost, defaultBlogs } from '@/data/blogs';
+import ImageUpload from '@/components/ui/ImageUpload';
 
 const emptyForm = {
   title: '', category: 'Panduan', author: 'Admin Nurmina',
@@ -148,31 +149,34 @@ export default function AdminBlogsPage() {
               {/* ── Image Section ── */}
               <div style={{ marginBottom: '1.5rem', background: '#f8fafc', borderRadius: '14px', border: '2px dashed #e2e8f0', padding: '1.25rem' }}>
                 <label style={{ ...labelStyle, marginBottom: '10px', color: '#D4AF37' }}>🖼️ Gambar Artikel</label>
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-                  {/* Preview */}
-                  <div style={{ width: '160px', height: '100px', borderRadius: '10px', overflow: 'hidden', background: '#e2e8f0', flexShrink: 0, border: '1px solid #e2e8f0' }}>
-                    {form.image ? (
-                      <img src={form.image} alt="preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-                    ) : (
-                      <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: '0.75rem', textAlign: 'center', padding: '8px' }}>
-                        Belum ada gambar
-                      </div>
-                    )}
-                  </div>
-                  {/* Input URL */}
-                  <div style={{ flex: 1, minWidth: '200px' }}>
-                    <label style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>Paste URL gambar dari internet (Unsplash, Google, dll)</label>
-                    <input
-                      style={{ ...inputStyle, border: '1.5px solid #D4AF37', background: '#fff' }}
-                      placeholder="https://images.unsplash.com/..."
-                      value={form.image}
-                      onChange={e => setForm({ ...form, image: e.target.value })}
-                    />
-                    <div style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '6px' }}>
-                      💡 Tip: Cari foto di <a href="https://unsplash.com" target="_blank" rel="noreferrer" style={{ color: '#D4AF37' }}>Unsplash.com</a>, klik kanan gambar → Salin alamat gambar
-                    </div>
-                  </div>
+                
+                {/* Upload Option */}
+                <div style={{ marginBottom: '1rem' }}>
+                  <ImageUpload
+                    label="Upload dari komputer"
+                    currentImage={form.image}
+                    folder="blogs"
+                    onUpload={(url) => setForm({ ...form, image: url })}
+                  />
                 </div>
+                
+                {/* URL Input Option */}
+                <div>
+                  <label style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>Atau paste URL gambar dari internet</label>
+                  <input
+                    style={{ ...inputStyle, border: '1.5px solid #D4AF37', background: '#fff' }}
+                    placeholder="https://images.unsplash.com/..."
+                    value={form.image}
+                    onChange={e => setForm({ ...form, image: e.target.value })}
+                  />
+                </div>
+                
+                {/* Preview */}
+                {form.image && (
+                  <div style={{ marginTop: '12px', borderRadius: '10px', overflow: 'hidden', maxHeight: '180px', border: '1px solid #e2e8f0' }}>
+                    <img src={form.image} alt="preview" style={{ width: '100%', height: '180px', objectFit: 'cover' }} onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                  </div>
+                )}
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>

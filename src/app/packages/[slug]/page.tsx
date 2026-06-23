@@ -198,9 +198,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ slug: 
                 <h1 style={{ fontFamily: 'var(--font-secondary)', fontSize: 'clamp(1.35rem, 3vw, 1.75rem)', fontWeight: 700, color: 'var(--gray-900)', marginBottom: '0.5rem' }}>
                   {pkg.name}
                 </h1>
-                <p style={{ fontSize: '0.875rem', color: 'var(--gray-500)', marginBottom: '1rem' }}>
-                  oleh {pkg.provider}
-                </p>
+
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <span style={{ color: '#FBBF24' }}>{'★'.repeat(Math.round(pkg.rating))}</span>
                   <span style={{ fontWeight: 700, color: 'var(--gray-800)' }}>{pkg.rating}</span>
@@ -524,8 +522,8 @@ export default function PackageDetailPage({ params }: { params: Promise<{ slug: 
                 </div>
               </SectionCard>
 
-              {/* Provider */}
-              <SectionCard title="Tentang Provider" icon="🏢">
+              {/* About NurminaThaif */}
+              <SectionCard title="Tentang NurminaThaif Tour" icon="🏢">
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
                   <div style={{
                     width: 64, height: 64, flexShrink: 0,
@@ -535,20 +533,25 @@ export default function PackageDetailPage({ params }: { params: Promise<{ slug: 
                     fontSize: '1.5rem',
                   }}>🕌</div>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--gray-900)', marginBottom: '4px' }}>{pkg.provider}</div>
-                    {pkg.verified && (
-                      <span style={{ background: 'var(--success-50)', color: 'var(--success-700)', padding: '3px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 700 }}>
-                        ✓ Terverifikasi
-                      </span>
-                    )}
+                    <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--gray-900)', marginBottom: '4px' }}>NurminaThaif Tour</div>
+                    <span style={{ background: 'var(--success-50)', color: 'var(--success-700)', padding: '3px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 700 }}>
+                      ✓ Terverifikasi Kemenag RI
+                    </span>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--gray-500)', marginTop: '10px', lineHeight: 1.6 }}>
+                      Penyelenggara Perjalanan Ibadah Umroh (PPIU) terpercaya dengan pengalaman lebih dari 10 tahun melayani jamaah dari seluruh Indonesia.
+                    </p>
                     <div style={{ display: 'flex', gap: '16px', marginTop: '12px' }}>
                       <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontWeight: 700, color: 'var(--primary-600)' }}>{pkg.providerRating}</div>
+                        <div style={{ fontWeight: 700, color: 'var(--primary-600)' }}>4.9</div>
                         <div style={{ fontSize: '0.7rem', color: 'var(--gray-400)' }}>Rating</div>
                       </div>
                       <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontWeight: 700, color: 'var(--primary-600)' }}>{pkg.providerReviews}+</div>
-                        <div style={{ fontSize: '0.7rem', color: 'var(--gray-400)' }}>Ulasan</div>
+                        <div style={{ fontWeight: 700, color: 'var(--primary-600)' }}>2000+</div>
+                        <div style={{ fontSize: '0.7rem', color: 'var(--gray-400)' }}>Jamaah</div>
+                      </div>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontWeight: 700, color: 'var(--primary-600)' }}>10+</div>
+                        <div style={{ fontSize: '0.7rem', color: 'var(--gray-400)' }}>Tahun</div>
                       </div>
                     </div>
                   </div>
