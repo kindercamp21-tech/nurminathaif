@@ -72,24 +72,25 @@ export default function PackagesPage() {
       <main style={{ paddingTop: '72px', minHeight: '100vh', background: 'var(--gray-50)' }}>
         {/* Header */}
         <div style={{
-          background: 'linear-gradient(135deg, var(--gray-900) 0%, var(--primary-900) 100%)',
-          padding: '4rem 0 3rem',
-          color: '#fff',
+          background: '#fff',
+          padding: '3rem 0 2rem',
+          color: 'var(--gray-900)',
+          borderBottom: '1px solid var(--gray-100)',
         }}>
           <div className="container">
-            <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', marginBottom: '1rem' }}>
-              <Link href="/" style={{ color: 'rgba(255,255,255,0.5)' }}>Home</Link>
+            <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: 'var(--gray-400)', marginBottom: '1rem' }}>
+              <Link href="/" style={{ color: 'var(--gray-400)' }}>Home</Link>
               <span>›</span>
-              <span style={{ color: '#fff' }}>Paket</span>
+              <span style={{ color: 'var(--gray-900)' }}>Paket</span>
             </nav>
-            <h1 style={{ fontFamily: 'var(--font-secondary)', fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 700, marginBottom: '0.75rem' }}>
+            <h1 style={{ fontFamily: 'var(--font-secondary)', fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--gray-900)' }}>
               Paket Umroh Tersedia
             </h1>
-            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1.05rem', marginBottom: '1.5rem' }}>
+            <p style={{ color: 'var(--gray-500)', fontSize: '1.05rem', marginBottom: '1.5rem' }}>
               Temukan paket yang sesuai dengan kebutuhan dan anggaran Anda
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-              <span style={{ background: 'rgba(212,175,55,0.2)', border: '1px solid rgba(212,175,55,0.4)', padding: '4px 14px', borderRadius: '99px', fontSize: '0.8rem', color: 'var(--primary-200)' }}>
+              <span style={{ background: 'var(--gray-100)', border: '1px solid var(--gray-200)', padding: '4px 14px', borderRadius: '99px', fontSize: '0.8rem', color: 'var(--gray-600)' }}>
                 {filtered.length} paket tersedia
               </span>
               <Link href="/assessment" style={{ background: 'var(--primary-500)', color: '#fff', padding: '6px 16px', borderRadius: '99px', fontSize: '0.8rem', fontWeight: 600, textDecoration: 'none' }}>
