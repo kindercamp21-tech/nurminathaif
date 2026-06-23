@@ -67,7 +67,18 @@ export default function AssessmentPage() {
         const durationMatch = !data.duration || Math.abs(p.duration - parseInt(data.duration)) <= 3;
         const cityMatch = !data.city || p.departureCity.some(c => c.toLowerCase().includes(data.city.toLowerCase())) || data.city === 'Lainnya';
         const hotelMatch = !data.hotelRating || p.hotelRating >= parseInt(data.hotelRating);
-        return budgetMatch || durationMatch || cityMatch || hotelMatch;
+        // Use AND logic - all selected criteria must match
+        const hasBudget = !!data.budget;
+        const hasDuration = !!data.duration;
+        const hasCity = !!data.city;
+        const hasHotel = !!data.hotelRating;
+        
+        if (hasBudget && !budgetMatch) return false;
+        if (hasDuration && !durationMatch) return false;
+        if (hasCity && !cityMatch) return false;
+        if (hasHotel && !hotelMatch) return false;
+        
+        return true;
       });
       const finalResults = filtered.length > 0 ? filtered.slice(0, 4) : allPackages.slice(0, 3);
       setResults(finalResults);
