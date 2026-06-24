@@ -179,17 +179,44 @@ export default function AdminAirlinesPage() {
               </div>
 
               <div style={{ gridColumn: 'span 2' }}>
-                <label style={labelStyle}>Logo Maskapai (Kode SVG atau URL Gambar)</label>
-                <textarea
-                  rows={4}
-                  style={{ ...inputStyle, fontFamily: 'monospace', fontSize: '0.85rem', resize: 'vertical' }}
-                  placeholder={'Tempelkan kode SVG di sini (mulai dengan <svg...) atau masukkan URL gambar (https://...)'}
-                  value={form.logo}
-                  onChange={e => setForm({ ...form, logo: e.target.value })}
-                />
-                <span style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '6px', display: 'block' }}>
-                  Tips: Anda dapat menempelkan kode SVG mentah agar logo ter-render instan tanpa masalah CORS. Jika dikosongkan, logo inisial otomatis akan dibuat.
-                </span>
+                <label style={labelStyle}>Logo Maskapai</label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <input
+                    type="file"
+                    accept="image/*,.svg"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      
+                      const formData = new FormData();
+                      formData.append('file', file);
+                      formData.append('folder', 'airlines');
+
+                      try {
+                        const response = await fetch('/api/upload', {
+                          method: 'POST',
+                          body: formData,
+                        });
+                        if (!response.ok) throw new Error('Upload failed');
+                        const data = await response.json();
+                        setForm({ ...form, logo: data.url });
+                      } catch (error) {
+                        alert('Gagal mengupload logo');
+                      }
+                    }}
+                    style={{ padding: '10px', borderRadius: '10px', border: '1.5px dashed #cbd5e1', background: '#f8fafc', cursor: 'pointer', fontSize: '0.85rem' }}
+                  />
+                  <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
+                    Upload file (SVG, PNG, JPG) atau paste kode SVG/URL di bawah:
+                  </div>
+                  <textarea
+                    rows={3}
+                    style={{ ...inputStyle, fontFamily: 'monospace', fontSize: '0.85rem', resize: 'vertical' }}
+                    placeholder={'Tempelkan kode SVG di sini (mulai dengan <svg...) atau masukkan URL gambar (https://...)'}
+                    value={form.logo}
+                    onChange={e => setForm({ ...form, logo: e.target.value })}
+                  />
+                </div>
               </div>
             </div>
 
