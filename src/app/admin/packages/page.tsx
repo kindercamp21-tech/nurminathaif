@@ -335,7 +335,7 @@ export default function AdminPackagesPage() {
                         Kelola Maskapai & Logo Baru →
                       </Link>
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '10px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '10px', marginBottom: '10px' }}>
                       {airlines.map(al => (
                         <button
                           key={al.id}
@@ -364,6 +364,48 @@ export default function AdminPackagesPage() {
                           <span style={{ fontSize: '0.7rem', color: form.airline === al.name ? '#D4AF37' : '#64748b', fontWeight: form.airline === al.name ? 700 : 400 }}>{al.name}</span>
                         </button>
                       ))}
+                    </div>
+                    <div style={{ padding: '12px', background: '#f8fafc', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+                      <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '8px', display: 'block' }}>
+                        Atau Upload Logo Maskapai Custom (SVG, PNG, JPG)
+                      </label>
+                      <input
+                        type="file"
+                        accept="image/*,.svg"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          
+                          const formData = new FormData();
+                          formData.append('file', file);
+                          formData.append('folder', 'airlines');
+
+                          try {
+                            const response = await fetch('/api/upload', {
+                              method: 'POST',
+                              body: formData,
+                            });
+                            if (!response.ok) throw new Error('Upload failed');
+                            const data = await response.json();
+                            setForm({ ...form, airlineLogo: data.url, airline: form.airline || 'Custom' });
+                          } catch (error) {
+                            alert('Gagal mengupload logo');
+                          }
+                        }}
+                        style={{ padding: '8px', borderRadius: '8px', border: '1.5px dashed #cbd5e1', background: '#fff', cursor: 'pointer', fontSize: '0.8rem' }}
+                      />
+                      {form.airlineLogo && (
+                        <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <img src={form.airlineLogo} alt="Logo Preview" style={{ width: '80px', height: '28px', objectFit: 'contain', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px' }} />
+                          <button
+                            type="button"
+                            onClick={() => setForm({ ...form, airlineLogo: '' })}
+                            style={{ padding: '4px 8px', fontSize: '0.75rem', background: '#fee2e2', color: '#dc2626', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                          >
+                            Hapus
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -496,9 +538,6 @@ export default function AdminPackagesPage() {
                       folder="packages"
                       onUpload={(url) => setForm({ ...form, image: url })}
                     />
-                    <div style={{ marginTop: '8px', padding: '10px 14px', background: '#f8fafc', borderRadius: '10px', fontSize: '0.8rem', color: '#64748b', lineHeight: 1.6 }}>
-                      💡 <strong>Upload ke Supabase Storage:</strong> Gambar akan disimpan di cloud Supabase dan dapat diakses secara publik.
-                    </div>
                   </div>
 
                   <div>
