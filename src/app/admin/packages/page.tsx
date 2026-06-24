@@ -387,8 +387,10 @@ export default function AdminPackagesPage() {
                             });
                             if (!response.ok) throw new Error('Upload failed');
                             const data = await response.json();
+                            console.log('Airline logo uploaded:', data.url);
                             setForm({ ...form, airlineLogo: data.url, airline: form.airline || 'Custom' });
                           } catch (error) {
+                            console.error('Upload error:', error);
                             alert('Gagal mengupload logo');
                           }
                         }}
